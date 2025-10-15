@@ -1,0 +1,36 @@
+version: "3.9"
+
+services:
+  localstack:
+    image: localstack/localstack:2.3
+    container_name: inset-localstack
+    ports:
+      - "4566:4566"
+      - "4510-4559:4510-4559"
+    environment:
+      - SERVICES=s3,sqs,events,iam,logs,cloudwatch,secretsmanager,ssm
+      - AWS_DEFAULT_REGION=us-east-1
+      - LOCALSTACK_PERSISTENCE=1
+      - LOCALSTACK_HOST=0.0.0.0
+      - DEBUG=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    volumes:
+      - ./state:/var/lib/localstack
+      - ./init:/etc/localstack/init/ready.d
+      - /var/run/docker.sock:/var/run/docker.sock
+    healthcheck:
+      test: ["CMD", "awslocal", "s3", "ls"]
+      interval: 20s
+      timeout: 10s
+      retries: 5
+
+  livekit:
+    image: livekit/livekit-server:v1.6.3
+    container_name: inset-livekit
+    command: ["--dev", "--bind", "0.0.0.0"]
+    environment:
+      - LIVEKIT_LOG_LEVEL=info
+    ports:
+      - "7880:7880"   # HTTP / WebSocket API
+      - "7881:7881"   # gRPC API
+      - "7882:7882/udp" # WebRTC media (UDP)
