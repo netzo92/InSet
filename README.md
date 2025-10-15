@@ -70,6 +70,16 @@ See [`docs/product_vision.md`](docs/product_vision.md) for additional product pl
    make test
    ```
 
+## Local AWS Emulation
+
+Many InSet workflows depend on AWS services for storage, messaging, and secrets. During development you can run a LocalStack environment that provisions these dependencies automatically:
+
+```bash
+docker compose -f infra/localstack/docker-compose.yml up
+```
+
+The compose file boots LocalStack with S3, SQS, EventBridge, Secrets Manager, and SSM enabled. A bootstrap script creates the expected buckets, queues, and configuration parameters so the FastAPI services and workers can connect without additional manual setup. Refer to [`infra/localstack/README.md`](infra/localstack/README.md) for details on the seeded resources and troubleshooting tips.
+
 ## Contributing
 
 We welcome community contributions! Please review our contribution guidelines (coming soon) and open an issue to discuss ideas, bug reports, or feature requests. Major contributions should align with the architectural direction described in the docs.
