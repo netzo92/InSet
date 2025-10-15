@@ -1,18 +1,18 @@
 # LocalStack Environment for InSet
 
-This directory contains a Docker Compose configuration and bootstrap scripts for emulating the AWS dependencies that InSet's ser
-vices rely on during development. The goal is to provide local equivalents of the storage, messaging, and secret-management reso
-urces used by the Conversation Runtime and evaluation workflows without requiring access to a real AWS account.
+This directory contains a Docker Compose configuration and bootstrap scripts for emulating the AWS dependencies that InSet's services rely on during development.
+The goal is to provide local equivalents of the storage, messaging, and secret-management resources, along with the LiveKit conversation runtime, without requiring access to a real AWS account.
 
 ## What's Included?
 
-The `docker-compose.yml` file starts a [LocalStack](https://www.localstack.cloud/) container with the following services enabled:
+The `docker-compose.yml` file starts a [LocalStack](https://www.localstack.cloud/) container with the following services enabled alongside a [LiveKit server](https://docs.livekit.io/home/self-host/) running in developer mode:
 
 - **S3** – stores chat transcripts and evaluation artifacts.
 - **SQS** – queues used for dispatching evaluation jobs and runtime events.
 - **EventBridge** – receives LiveKit webhook notifications for synchronization.
 - **Secrets Manager & SSM Parameter Store** – manage API keys and runtime configuration.
 - **CloudWatch Logs/Metrics** – capture structured logs and metrics emitted by the services.
+- **LiveKit SFU** – provides WebRTC rooms for moderated interviews, exposed on `http://localhost:7880` (REST/gRPC) and `ws://localhost:7880` (WebSocket).
 
 During container start-up, the `init/01-create-resources.sh` script seeds LocalStack with opinionated defaults so that the applic
 ation code can assume the resources exist:
@@ -20,7 +20,7 @@ ation code can assume the resources exist:
 - S3 buckets: `inset-transcripts`, `inset-evaluation-artifacts`
 - SQS queues: `inset-evaluations`, `inset-runtime-events`
 - EventBridge bus: `inset-livekit-events`
-- Secrets Manager entries for runtime API keys and LiveKit credentials
+- Secrets Manager entries for runtime API keys and LiveKit credentials (matching the dev-mode key/secret `devkey` / `secret`)
 - SSM parameter `/inset/runtime/config` that aggregates core resource identifiers
 
 > ℹ️ Feel free to customize these names or add additional resources as the implementation matures.
@@ -38,8 +38,8 @@ From the repository root:
 docker compose -f infra/localstack/docker-compose.yml up
 ```
 
-LocalStack exposes AWS-compatible endpoints on `http://localhost:4566`. The default credentials are `AWS_ACCESS_KEY_ID=test`, `
-AWS_SECRET_ACCESS_KEY=test`, and `AWS_REGION=us-east-1`.
+LocalStack exposes AWS-compatible endpoints on `http://localhost:4566`. The default credentials are `AWS_ACCESS_KEY_ID=test`, `AWS_SECRET_ACCESS_KEY=test`, and `AWS_REGION=us-east-1`.
+LiveKit is reachable on `http://localhost:7880` (HTTP/gRPC) and `ws://localhost:7880` (WebSocket). The default API key and secret are `devkey` / `secret` when running in dev mode.
 
 When the container is ready you should see the bootstrap summary:
 

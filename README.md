@@ -22,7 +22,7 @@ InSet is planned as a modular platform with the following components:
 | **Web Studio** | React/Next.js front-end for authoring conversations, configuring agents, and reviewing analytics. |
 | **Workflow Orchestrator** | FastAPI (Python) service that manages projects, agent configurations, evaluation jobs, and dataset storage. |
 | **Evaluation Engine** | Background worker (Celery) that runs automated test suites, regression benchmarks, and red-teaming scenarios using LLM-based judges. |
-| **Conversation Runtime** | Gateway that handles live chat sessions, tool invocation, and conversation logging. |
+| **Conversation Runtime** | LiveKit-powered gateway that handles live chat sessions, tool invocation, and conversation logging. |
 | **Data & Storage** | PostgreSQL for structured metadata, ClickHouse for analytics, and S3-compatible storage for transcripts & artifacts. |
 | **Observability** | OpenTelemetry tracing + Prometheus metrics + Grafana dashboards. |
 
@@ -70,15 +70,15 @@ See [`docs/product_vision.md`](docs/product_vision.md) for additional product pl
    make test
    ```
 
-## Local AWS Emulation
+## Local Cloud & Real-Time Emulation
 
-Many InSet workflows depend on AWS services for storage, messaging, and secrets. During development you can run a LocalStack environment that provisions these dependencies automatically:
+Many InSet workflows depend on AWS services for storage, messaging, and secrets, and real-time interviews run through LiveKit. During development you can run a LocalStack + LiveKit environment that provisions these dependencies automatically:
 
 ```bash
 docker compose -f infra/localstack/docker-compose.yml up
 ```
 
-The compose file boots LocalStack with S3, SQS, EventBridge, Secrets Manager, and SSM enabled. A bootstrap script creates the expected buckets, queues, and configuration parameters so the FastAPI services and workers can connect without additional manual setup. Refer to [`infra/localstack/README.md`](infra/localstack/README.md) for details on the seeded resources and troubleshooting tips.
+The compose file boots LocalStack with S3, SQS, EventBridge, Secrets Manager, and SSM enabled alongside a LiveKit server running in developer mode. A bootstrap script creates the expected buckets, queues, configuration parameters, and LiveKit credentials so the FastAPI services and workers can connect without additional manual setup. Refer to [`infra/localstack/README.md`](infra/localstack/README.md) for details on the seeded resources, LiveKit endpoints, and troubleshooting tips.
 
 ## Contributing
 

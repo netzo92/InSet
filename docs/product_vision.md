@@ -17,7 +17,7 @@ Enable teams of all sizes to build safe, high-quality AI assistants through tran
 - **Evaluation & testing** – Define automated regression suites, run batch evaluations, and collect human ratings.
 - **Governance & compliance** – Track approvals, enforce policies, and monitor for risky behaviors.
 - **Analytics & observability** – Understand performance trends, user satisfaction, and model costs.
-- **Live collaboration & interviews** – Co-create sessions with stakeholders and run moderated LiveKit conversations for hiring or trust & safety reviews.
+- **Live collaboration & interviews** – Co-create sessions with stakeholders and run moderated LiveKit-powered conversations for hiring or trust & safety reviews.
 
 ## Value Propositions
 

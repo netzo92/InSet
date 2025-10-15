@@ -23,3 +23,14 @@ services:
       interval: 20s
       timeout: 10s
       retries: 5
+
+  livekit:
+    image: livekit/livekit-server:v1.6.3
+    container_name: inset-livekit
+    command: ["--dev", "--bind", "0.0.0.0"]
+    environment:
+      - LIVEKIT_LOG_LEVEL=info
+    ports:
+      - "7880:7880"   # HTTP / WebSocket API
+      - "7881:7881"   # gRPC API
+      - "7882:7882/udp" # WebRTC media (UDP)

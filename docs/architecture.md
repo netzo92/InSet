@@ -47,6 +47,7 @@ This document outlines the initial system architecture for InSet, an open-source
 
 ### Conversation Runtime Gateway
 - Handles real-time chat sessions with user clients (web widgets, API consumers) and LiveKit facilitators.
+- Anchors every live room in LiveKit, using the SFU for audio/video, screen sharing, and presence data.
 - Orchestrates tool calls, retrieval augmentation, and response post-processing.
 - Logs transcripts to S3 and analytics events to ClickHouse via Kafka.
 - Applies safety guardrails (moderation filters, output classifiers) before responding to end-users.
@@ -56,6 +57,7 @@ This document outlines the initial system architecture for InSet, an open-source
 - Utilize LiveKit Cloud or a self-hosted LiveKit deployment to manage audio/video rooms for interview sessions.
 - Web Studio embeds the LiveKit client SDK for real-time media, screen sharing, and participant presence during collaborative reviews.
 - Conversation Runtime listens to LiveKit webhooks to synchronize participant events, capture recordings, and persist transcripts/metadata alongside chat logs.
+- Development environments can run LiveKit locally via `docker compose -f infra/localstack/docker-compose.yml up` which starts a dev-mode server with the expected API key/secret (`devkey`/`secret`).
 
 ### Evaluation Engine (Celery Workers)
 - Consumes evaluation jobs, executes scripted conversations, and collects metrics.
@@ -78,7 +80,7 @@ This document outlines the initial system architecture for InSet, an open-source
 1. A user configures an agent in the Web Studio; changes are persisted via the Workflow API to PostgreSQL.
 2. The user triggers an evaluation run. The Workflow API enqueues a job on Redis.
 3. Celery workers pick up the job, execute scripted conversations against the Conversation Runtime.
-4. Runtime interacts with the selected LLM provider, logs transcripts to S3, and publishes analytics to ClickHouse.
+4. Runtime interacts with LiveKit for media/presence events, coordinates with the selected LLM provider, logs transcripts to S3, and publishes analytics to ClickHouse.
 5. Evaluation results are stored back into PostgreSQL and ClickHouse. Web Studio queries these stores to render dashboards.
 
 ## Security Considerations

@@ -10,7 +10,7 @@ awslocal sqs create-queue --queue-name inset-runtime-events >/dev/null 2>&1 || e
 awslocal events create-event-bus --name inset-livekit-events >/dev/null 2>&1 || echo "Event bus inset-livekit-events already exists"
 
 awslocal secretsmanager create-secret --name inset/runtime/api --secret-string '{"apiKey":"local-demo-key"}' >/dev/null 2>&1 || echo "Secret inset/runtime/api already exists"
-awslocal secretsmanager create-secret --name inset/livekit/api --secret-string '{"apiKey":"local-livekit-key","apiSecret":"local-livekit-secret"}' >/dev/null 2>&1 || echo "Secret inset/livekit/api already exists"
+awslocal secretsmanager create-secret --name inset/livekit/api --secret-string '{"apiKey":"devkey","apiSecret":"secret"}' >/dev/null 2>&1 || echo "Secret inset/livekit/api already exists"
 
 runtime_config=$(cat <<'JSON'
 {
@@ -18,7 +18,9 @@ runtime_config=$(cat <<'JSON'
   "artifactBucket": "inset-evaluation-artifacts",
   "evaluationQueueUrl": "http://localhost:4566/000000000000/inset-evaluations",
   "runtimeEventQueueUrl": "http://localhost:4566/000000000000/inset-runtime-events",
-  "livekitEventBusArn": "arn:aws:events:us-east-1:000000000000:event-bus/inset-livekit-events"
+  "livekitEventBusArn": "arn:aws:events:us-east-1:000000000000:event-bus/inset-livekit-events",
+  "livekitHost": "ws://localhost:7880",
+  "livekitApiKey": "devkey"
 }
 JSON
 )
