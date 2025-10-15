@@ -44,7 +44,7 @@ A more detailed component breakdown is available in [`docs/architecture.md`](doc
    - [ ] Add qualitative review workflows with annotation tooling.
 4. **Collaboration & governance**
    - [ ] Role-based access control and audit trails.
-   - [ ] Live collaboration and interview review mode (“Live Com”) with shared transcripts and moderator controls.
+   - [ ] Live collaboration and interview review mode (LiveKit) with shared transcripts and moderator controls.
    - [ ] Policy enforcement (guardrails, banned outputs, compliance checks).
    - [ ] Release management with approvals and rollbacks.
 

@@ -35,7 +35,7 @@ This document outlines the initial system architecture for InSet, an open-source
 ## Service Responsibilities
 
 ### Web Studio (Next.js + TypeScript)
-- Provides UI for project management, agent configuration, prompt editing, dataset curation, and Live Com interview sessions.
+- Provides UI for project management, agent configuration, prompt editing, dataset curation, and LiveKit-powered interview sessions.
 - Implements real-time collaboration using WebSockets (Ably/Supabase Realtime) or CRDTs.
 - Integrates with the Workflow API for CRUD operations and evaluation dashboards via REST/GraphQL.
 
@@ -46,11 +46,16 @@ This document outlines the initial system architecture for InSet, an open-source
 - Emits structured logs via OpenTelemetry and ships traces/metrics to the observability stack.
 
 ### Conversation Runtime Gateway
-- Handles real-time chat sessions with user clients (web widgets, API consumers) and Live Com facilitators.
+- Handles real-time chat sessions with user clients (web widgets, API consumers) and LiveKit facilitators.
 - Orchestrates tool calls, retrieval augmentation, and response post-processing.
 - Logs transcripts to S3 and analytics events to ClickHouse via Kafka.
 - Applies safety guardrails (moderation filters, output classifiers) before responding to end-users.
 - Supports moderator controls (mute, inject prompts, mark incidents) required for interview workflows.
+
+### Real-Time Communications (LiveKit)
+- Utilize LiveKit Cloud or a self-hosted LiveKit deployment to manage audio/video rooms for interview sessions.
+- Web Studio embeds the LiveKit client SDK for real-time media, screen sharing, and participant presence during collaborative reviews.
+- Conversation Runtime listens to LiveKit webhooks to synchronize participant events, capture recordings, and persist transcripts/metadata alongside chat logs.
 
 ### Evaluation Engine (Celery Workers)
 - Consumes evaluation jobs, executes scripted conversations, and collects metrics.

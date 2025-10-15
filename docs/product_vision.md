@@ -17,7 +17,7 @@ Enable teams of all sizes to build safe, high-quality AI assistants through tran
 - **Evaluation & testing** – Define automated regression suites, run batch evaluations, and collect human ratings.
 - **Governance & compliance** – Track approvals, enforce policies, and monitor for risky behaviors.
 - **Analytics & observability** – Understand performance trends, user satisfaction, and model costs.
-- **Live collaboration & interviews** – Co-create sessions with stakeholders and run moderated live conversations for hiring or trust & safety reviews.
+- **Live collaboration & interviews** – Co-create sessions with stakeholders and run moderated LiveKit conversations for hiring or trust & safety reviews.
 
 ## Value Propositions
 
@@ -25,7 +25,7 @@ Enable teams of all sizes to build safe, high-quality AI assistants through tran
 - Pluggable adapters for any LLM or tool provider.
 - Collaborative workspace with role-based permissions and review flows.
 - Extensible evaluation engine supporting custom metrics and judge models.
-- Live interview (“Live Com”) mode for moderated real-time sessions with shared annotations.
+- LiveKit-powered interview mode for moderated real-time sessions with shared annotations.
 
 ## Competitive Differentiators
 
@@ -44,7 +44,7 @@ Enable teams of all sizes to build safe, high-quality AI assistants through tran
 ## Release Milestones
 
 1. **MVP (v0.1)** – Core project scaffolding, agent configuration CRUD, manual evaluation runs.
-2. **Beta (v0.5)** – Automated evaluation engine, analytics dashboards, initial governance workflows, and an initial Live Com experience for moderated sessions.
+2. **Beta (v0.5)** – Automated evaluation engine, analytics dashboards, initial governance workflows, and an initial LiveKit experience for moderated sessions.
 3. **Launch (v1.0)** – End-to-end collaboration features, integrations marketplace, deployment tooling.
 4. **Enterprise (v2.0+)** – Advanced policy controls, enterprise SSO, fine-grained audit & compliance tooling.
 
